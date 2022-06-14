@@ -1,18 +1,23 @@
 class Food {
-  final int? id;
+  late int? id;
   final String name;
   final String description;
   final Categories category;
   final int price;
   final int calories;
 
-  const Food(
-      {this.id,
-      required this.name,
-      required this.description,
-      required this.category,
-      required this.price,
-      required this.calories});
+  static int idCounter = 0;
+
+  Food({
+    this.id,
+    required this.name,
+    required this.description,
+    required this.category,
+    required this.price,
+    required this.calories,
+  }) {
+    id = idCounter++;
+  }
 }
 
 enum Categories {
@@ -27,3 +32,41 @@ class FoodItem {
 
   const FoodItem({required this.food, required this.qty});
 }
+
+List<Food> foods = [
+  Food(
+    name: "Spicy Meal",
+    description: "Very hot and spicy meal made using recipe from China",
+    category: Categories.food,
+    price: 225,
+    calories: 1300,
+  ),
+  Food(
+    name: "Very Spicy Meal",
+    description: "Very hot and spicy meal made using recipe from China",
+    category: Categories.food,
+    price: 225,
+    calories: 1300,
+  ),
+  Food(
+    name: "Fucking Spicy Meal",
+    description: "Very hot and spicy meal made using recipe from China",
+    category: Categories.food,
+    price: 225,
+    calories: 1300,
+  ),
+  Food(
+    name: "Even More Spicy Meal",
+    description: "Very hot and spicy meal made using recipe from China",
+    category: Categories.food,
+    price: 225,
+    calories: 1300,
+  ),
+  Food(
+    name: "Deathly Spicy Meal",
+    description: "Very hot and spicy meal made using recipe from China",
+    category: Categories.food,
+    price: 225,
+    calories: 1300,
+  ),
+];
