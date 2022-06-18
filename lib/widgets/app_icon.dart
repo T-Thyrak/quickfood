@@ -9,7 +9,7 @@ class AppIcon extends StatelessWidget {
   const AppIcon(
       {Key? key,
       required this.icon,
-      this.backgroundColor = const Color(0xFF756d54),
+      this.backgroundColor = const Color(0xFFfcfdef),
       this.iconColor = const Color(0xFF756d54),
       this.size = 40})
       : super(key: key);
@@ -20,14 +20,9 @@ class AppIcon extends StatelessWidget {
       width: size,
       height: size,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(size/2),
-        color: backgroundColor
-      ),
-      child: Icon(
-        icon,
-        color: iconColor,
-        size:16
-      ),
+          borderRadius: BorderRadius.circular(size / 2),
+          color: backgroundColor),
+      child: Icon(icon, color: iconColor, size: 16),
     );
   }
 }
