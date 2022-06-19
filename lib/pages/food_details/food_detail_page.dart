@@ -1,18 +1,40 @@
 import 'package:quickfood/core/base_import.dart';
 import 'package:quickfood/widgets/exandable_text_widgets.dart';
 
-class FoodDelail extends StatelessWidget {
-  Food fooddata = foods[0];
-
+class FoodDelail extends StatefulWidget {
   FoodDelail({
     Key? key,
     //required this.fooddata
   }) : super(key: key);
 
   @override
+  State<FoodDelail> createState() => _FoodDelailState();
+}
+
+class _FoodDelailState extends State<FoodDelail> {
+  Food fooddata = foods[0];
+  int _quantity = 1;
+
+  void setQuantity() {
+    setState(() {
+      _quantity++;
+    });
+  }
+
+  void lowQuantity() {
+    if (_quantity <= 0) {
+      _quantity = 1;
+    }
+    setState(() {
+      _quantity--;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     int foodcal = fooddata.calories;
-    int foodprice = fooddata.price;
+    int foodprice = (fooddata.price) * _quantity;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -37,8 +59,10 @@ class FoodDelail extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  AppIcon(icon: Icons.arrow_back_ios),
-                  AppIcon(icon: Icons.shopping_cart),
+                  GestureDetector(
+                      onTap: () {}, child: AppIcon(icon: Icons.arrow_back_ios)),
+                  GestureDetector(
+                      onTap: () {}, child: AppIcon(icon: Icons.shopping_cart)),
                 ],
               )),
           //TILTE
@@ -71,11 +95,15 @@ class FoodDelail extends StatelessWidget {
                     SizedBox(
                       height: 10,
                     ),
-                    SmallText(text: fooddata.description),
+                    SingleChildScrollView(
+                      child: ExandableTextWidget(
+                        text: fooddata.description,
+                      ),
+                    ),
                   ],
                 ),
               )),
-          //FoodData
+          //FoodData 4:25:03
         ],
       ),
       bottomNavigationBar: Container(
@@ -97,20 +125,26 @@ class FoodDelail extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(
-                    Icons.remove,
-                    color: AppColor.signColor,
+                  GestureDetector(
+                    onTap: lowQuantity,
+                    child: Icon(
+                      Icons.remove,
+                      color: AppColor.signColor,
+                    ),
                   ),
                   SizedBox(
                     width: 5,
                   ),
-                  BigText(text: "0"),
+                  BigText(text: "$_quantity"),
                   SizedBox(
                     width: 5,
                   ),
-                  Icon(
-                    Icons.add,
-                    color: AppColor.signColor,
+                  GestureDetector(
+                    onTap: setQuantity,
+                    child: Icon(
+                      Icons.add,
+                      color: AppColor.signColor,
+                    ),
                   ),
                 ],
               ),
@@ -121,17 +155,19 @@ class FoodDelail extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   color: AppColor.mainColor),
               child: InkWell(
+                onTap: () {},
                 child: Row(
                   children: [
-                    BigText(text: "\$ $foodprice"),
+                    BigText(text: "\$ $foodprice "),
                     SizedBox(
                       width: 10,
                     ),
                     Icon(Icons.point_of_sale_rounded),
-                    SizedBox(
-                      width: 5,
+                    SmallText(
+                      text: "Add to Cart",
+                      size: 16,
+                      color: Color.fromARGB(255, 190, 163, 154),
                     ),
-                    BigText(text: "Add to Cart"),
                   ],
                 ),
               ),

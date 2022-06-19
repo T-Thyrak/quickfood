@@ -12,7 +12,7 @@ class _ExandableTextWidgetState extends State<ExandableTextWidget> {
   late String firstHalf;
   late String latertHalf;
   bool islongs = true;
-  double textHeight = Dimensions.screenHeigh / 5.63;
+  double textHeight = 160;
 
   @override
   void initState() {
@@ -51,7 +51,7 @@ class _ExandableTextWidgetState extends State<ExandableTextWidget> {
                         color: AppColor.mainColor,
                       ),
                       Icon(
-                        Icons.arrow_downward,
+                        islongs ? Icons.arrow_downward : Icons.arrow_upward,
                         color: AppColor.mainColor,
                       ),
                     ],
