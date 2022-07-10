@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:quickfood/core/base_import.dart';
+import 'package:quickfood/database/food_list.dart';
 import 'package:quickfood/widgets/exandable_text_widgets.dart';
 
 class FoodDelail extends StatefulWidget {
@@ -12,6 +15,11 @@ class FoodDelail extends StatefulWidget {
 }
 
 class _FoodDelailState extends State<FoodDelail> {
+  // final Stream<QuerySnapshot> foods =
+  //     FirebaseFirestore.instance.collection("Foods List").snapshots();
+
+  Future<List<Food>> foodData = FoodListDatabase().getData();
+
   Food fooddata = foods[0];
   int _quantity = 1;
 
