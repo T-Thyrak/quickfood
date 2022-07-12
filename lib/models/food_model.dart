@@ -18,6 +18,15 @@ class Food {
   }) {
     id = idCounter++;
   }
+  factory Food.fromJson(Map<String, dynamic> json) {
+    return Food(
+        id: json['id'],
+        name: json['name'],
+        description: json['description'],
+        category: json['category'],
+        price: json['price'],
+        calories: json['calories']);
+  }
 }
 
 enum Categories {
