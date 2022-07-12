@@ -69,8 +69,13 @@ class _MainFoodHomePageState extends State<MainFoodHomePage> {
               ),
             ),
           ),
-          MainFoodPageBody(
-            foods: widget.controller.foods,
+          Expanded(
+            child: SingleChildScrollView(
+              child: MainFoodPageBody(
+                foods: widget.controller.foods,
+                popularFoods: widget.controller.popularFoods,
+              ),
+            ),
           ),
         ],
       ),

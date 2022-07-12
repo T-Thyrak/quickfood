@@ -51,4 +51,14 @@ class MainFoodHomePageController {
       calories: 1300,
     ),
   ];
+
+  List<Food> popularFoods = [
+    Food(
+      name: "Banh Hoi",
+      description: "A delicious Vietnamese dish made using recipe from Vietnam",
+      category: Categories.food,
+      price: 112,
+      calories: 430,
+    ),
+  ];
 }

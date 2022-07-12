@@ -4,17 +4,19 @@ import 'package:quickfood/core/base_import.dart';
 import 'package:quickfood/database/food_list.dart';
 import 'package:quickfood/widgets/exandable_text_widgets.dart';
 
-class FoodDelail extends StatefulWidget {
-  FoodDelail({
+class FoodDetail extends StatefulWidget {
+  final Food fooddata;
+
+  FoodDetail({
     Key? key,
-    //required this.fooddata
+    required this.fooddata,
   }) : super(key: key);
 
   @override
-  State<FoodDelail> createState() => _FoodDelailState();
+  State<FoodDetail> createState() => _FoodDetailState();
 }
 
-class _FoodDelailState extends State<FoodDelail> {
+class _FoodDetailState extends State<FoodDetail> {
   // final Stream<QuerySnapshot> foods =
   //     FirebaseFirestore.instance.collection("Foods List").snapshots();
 
@@ -68,7 +70,10 @@ class _FoodDelailState extends State<FoodDelail> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                      onTap: () {}, child: AppIcon(icon: Icons.arrow_back_ios)),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: AppIcon(icon: Icons.arrow_back_ios)),
                   GestureDetector(
                       onTap: () {}, child: AppIcon(icon: Icons.shopping_cart)),
                 ],

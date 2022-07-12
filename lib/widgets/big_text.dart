@@ -13,7 +13,7 @@ class BigText extends StatelessWidget {
     required this.text,
     this.fontFamily = 'Roboto',
     this.size = 20,
-    this.overflow = TextOverflow.ellipsis,
+    this.overflow = TextOverflow.fade,
   }) : super(key: key);
 
   @override

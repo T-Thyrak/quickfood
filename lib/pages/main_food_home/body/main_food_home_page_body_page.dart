@@ -1,12 +1,16 @@
 import 'package:quickfood/core/base_import.dart';
+import 'package:quickfood/pages/food_details/food_detail_page.dart';
 import 'package:quickfood/widgets/icon_and_text_widget.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 
 class MainFoodPageBody extends StatefulWidget {
   final List<Food> foods;
+  final List<Food> popularFoods;
 
   const MainFoodPageBody({
     Key? key,
     required this.foods,
+    required this.popularFoods,
   }) : super(key: key);
 
   @override
@@ -16,8 +20,8 @@ class MainFoodPageBody extends StatefulWidget {
 class _MainFoodPageBodyState extends State<MainFoodPageBody> {
   PageController pageController = PageController(viewportFraction: 0.85);
   double _currPageValue = 0.0;
-  double _scaleFactor = 0.8;
-  double _height = 220;
+  final double _scaleFactor = 0.8;
+  final double _height = 220;
 
   @override
   void initState() {
@@ -38,15 +42,143 @@ class _MainFoodPageBodyState extends State<MainFoodPageBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 320,
-      child: PageView.builder(
-        controller: pageController,
-        itemCount: widget.foods.length,
-        itemBuilder: (context, index) {
-          return _buildPageItem(index);
-        },
-      ),
+    return Column(
+      children: [
+        Container(
+          height: 320,
+          child: PageView.builder(
+            controller: pageController,
+            itemCount: widget.foods.length,
+            itemBuilder: (context, index) {
+              return _buildPageItem(index);
+            },
+          ),
+        ),
+        DotsIndicator(
+          dotsCount: widget.foods.length,
+          position: _currPageValue,
+          decorator: DotsDecorator(
+            size: const Size.square(9),
+            activeColor: AppColor.mainColor,
+            activeSize: const Size(18, 9),
+            activeShape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+          ),
+        ),
+        const SizedBox(
+          height: 30,
+        ),
+        Container(
+          margin: const EdgeInsets.only(
+            left: 30,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              const BigText(text: "Popular"),
+              const SizedBox(
+                width: 10,
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                  bottom: 3,
+                ),
+                child: const BigText(
+                  text: ".",
+                  color: Colors.black26,
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                  bottom: 3,
+                ),
+                child: const SmallText(text: "Food pairing"),
+              )
+            ],
+          ),
+        ),
+        Container(
+          height: 700,
+          child: ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            // shrinkWrap: true,
+            itemCount: widget.popularFoods.length,
+            itemBuilder: (context, index) {
+              return Container(
+                margin: const EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                  bottom: 10,
+                ),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FoodDetail(
+                          fooddata: widget.popularFoods[index],
+                        ),
+                      ),
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      // imsec
+                      Container(
+                        width: 100,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            20,
+                          ),
+                          color: Colors.white38,
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage(
+                                "assets/images/food${index + 1}.png"),
+                          ),
+                        ),
+                      ),
+
+                      Expanded(
+                        child: Container(
+                          height: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(20),
+                              bottomRight: Radius.circular(20),
+                            ),
+                            color: Colors.white,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                BigText(text: widget.popularFoods[index].name),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                SmallText(
+                                    text:
+                                        widget.popularFoods[index].description),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 
@@ -152,6 +284,7 @@ class _MainFoodPageBodyState extends State<MainFoodPageBody> {
                       height: 20,
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: const [
                         IconAndTextWidget(
                           icon: Icons.circle_sharp,
