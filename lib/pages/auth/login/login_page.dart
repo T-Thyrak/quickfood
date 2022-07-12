@@ -66,7 +66,7 @@ class LoginPage extends StatelessWidget {
             ),
             Container(
               width: Dimensions.screenWidth / 2,
-              height: Dimensions.screenHeigh / 13,
+              height: Dimensions.screenHeight / 13,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
                   color: AppColor.mainColor),
