@@ -22,7 +22,7 @@ class _FoodDetailState extends State<FoodDetail> {
 
   Future<List<Food>> foodData = FoodListDatabase().getData();
 
-  Food fooddata = foods[0];
+  // Food fooddata = foods[0];
   int _quantity = 1;
 
   void setQuantity() {
@@ -42,8 +42,8 @@ class _FoodDetailState extends State<FoodDetail> {
 
   @override
   Widget build(BuildContext context) {
-    int foodcal = fooddata.calories;
-    int foodprice = (fooddata.price) * _quantity;
+    int foodcal = widget.fooddata.calories;
+    int foodprice = (widget.fooddata.price) * _quantity;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -95,7 +95,7 @@ class _FoodDetailState extends State<FoodDetail> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     BigText(
-                      text: fooddata.name,
+                      text: widget.fooddata.name,
                     ),
                     SizedBox(
                       height: 10,
@@ -110,7 +110,7 @@ class _FoodDetailState extends State<FoodDetail> {
                     ),
                     SingleChildScrollView(
                       child: ExandableTextWidget(
-                        text: fooddata.description,
+                        text: widget.fooddata.description,
                       ),
                     ),
                   ],

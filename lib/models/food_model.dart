@@ -5,6 +5,7 @@ class Food {
   final Categories category;
   final int price;
   final int calories;
+  final String imageLink;
 
   static int idCounter = 0;
 
@@ -15,17 +16,20 @@ class Food {
     required this.category,
     required this.price,
     required this.calories,
+    required this.imageLink,
   }) {
     id = idCounter++;
   }
   factory Food.fromJson(Map<String, dynamic> json) {
     return Food(
-        id: json['id'],
-        name: json['name'],
-        description: json['description'],
-        category: json['category'],
-        price: json['price'],
-        calories: json['calories']);
+      id: json['id'],
+      name: json['name'],
+      description: json['description'],
+      category: json['category'],
+      price: json['price'],
+      calories: json['calories'],
+      imageLink: json['imageLink'],
+    );
   }
 }
 
@@ -41,41 +45,3 @@ class FoodItem {
 
   const FoodItem({required this.food, required this.qty});
 }
-
-List<Food> foods = [
-  Food(
-    name: "Spicy Meal",
-    description: "Very hot and spicy meal made using recipe from China",
-    category: Categories.food,
-    price: 225,
-    calories: 1300,
-  ),
-  Food(
-    name: "Very Spicy Meal",
-    description: "Very hot and spicy meal made using recipe from China",
-    category: Categories.food,
-    price: 225,
-    calories: 1300,
-  ),
-  Food(
-    name: "Fucking Spicy Meal",
-    description: "Very hot and spicy meal made using recipe from China",
-    category: Categories.food,
-    price: 225,
-    calories: 1300,
-  ),
-  Food(
-    name: "Even More Spicy Meal",
-    description: "Very hot and spicy meal made using recipe from China",
-    category: Categories.food,
-    price: 225,
-    calories: 1300,
-  ),
-  Food(
-    name: "Deathly Spicy Meal",
-    description: "Very hot and spicy meal made using recipe from China",
-    category: Categories.food,
-    price: 225,
-    calories: 1300,
-  ),
-];

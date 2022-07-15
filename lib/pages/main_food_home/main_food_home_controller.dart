@@ -21,6 +21,7 @@ class MainFoodHomePageController {
       category: Categories.food,
       price: 225,
       calories: 1300,
+      imageLink: "",
     ),
     Food(
       name: "Very Spicy Meal",
@@ -28,6 +29,7 @@ class MainFoodHomePageController {
       category: Categories.food,
       price: 225,
       calories: 1300,
+      imageLink: "",
     ),
     Food(
       name: "Fucking Spicy Meal",
@@ -35,6 +37,7 @@ class MainFoodHomePageController {
       category: Categories.food,
       price: 225,
       calories: 1300,
+      imageLink: "",
     ),
     Food(
       name: "Even More Spicy Meal",
@@ -42,6 +45,7 @@ class MainFoodHomePageController {
       category: Categories.food,
       price: 225,
       calories: 1300,
+      imageLink: "",
     ),
     Food(
       name: "Deathly Spicy Meal",
@@ -49,6 +53,7 @@ class MainFoodHomePageController {
       category: Categories.food,
       price: 225,
       calories: 1300,
+      imageLink: "",
     ),
   ];
 
@@ -59,6 +64,7 @@ class MainFoodHomePageController {
       category: Categories.food,
       price: 112,
       calories: 430,
+      imageLink: "",
     ),
   ];
 }
