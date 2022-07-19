@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quickfood/pages/food_details/food_detail.dart';
 import 'package:quickfood/pages/main_food_home/main_food_home.dart';
 
 class MyHomePage extends StatefulWidget {
