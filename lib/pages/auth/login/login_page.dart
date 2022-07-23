@@ -14,14 +14,14 @@ class LoginPage extends StatelessWidget {
     var passwsdController = TextEditingController();
     return Scaffold(
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 200,
             ),
             Container(
-              margin: EdgeInsets.only(left: 20),
+              margin: const EdgeInsets.only(left: 20),
               width: double.maxFinite,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,23 +45,23 @@ class LoginPage extends StatelessWidget {
             AppTextField(
                 textEditingController: emailController,
                 hintText: "Email",
-                icon: Icon(
+                icon: const Icon(
                   Icons.email,
                   color: Colors.yellow,
                 )),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             AppTextField(
               textEditingController: passwsdController,
               hintText: "Password",
-              icon: Icon(
+              icon: const Icon(
                 Icons.key,
                 color: Colors.yellow,
               ),
               isPass: true,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Container(
@@ -70,7 +70,7 @@ class LoginPage extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
                   color: AppColor.mainColor),
-              child: Center(
+              child: const Center(
                 child: BigText(
                   text: "Sign In",
                   size: 30,
@@ -78,22 +78,21 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             RichText(
                 text: TextSpan(
                     text: "Sign In using Others",
                     style: TextStyle(color: Colors.grey[500], fontSize: 12))),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            CircleAvatar(
-              backgroundImage: NetworkImage(
-                "https://play-lh.googleusercontent.com/aFWiT2lTa9CYBpyPjfgfNHd0r5puwKRGj2rHpdPTNrz2N9LXgN_MbLjePd1OTc0E8Rl1",
-              ),
+            const CircleAvatar(
+              backgroundColor: Colors.white,
+              backgroundImage: AssetImage("assets/logos/google-logo.png"),
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
             Row(
@@ -107,10 +106,10 @@ class LoginPage extends StatelessWidget {
                 RichText(
                     text: TextSpan(
                         recognizer: TapGestureRecognizer()
-                          ..onTap = () => Get.to(() => RegisterPage(),
+                          ..onTap = () => Get.to(() => const RegisterPage(),
                               transition: Transition.fade),
                         text: " Create",
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.black,
                             fontSize: 18,
                             fontWeight: FontWeight.bold))),
