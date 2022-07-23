@@ -1,8 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:quickfood/core/base_import.dart';
 import 'package:quickfood/database/food_list.dart';
 import 'package:quickfood/widgets/exandable_text_widgets.dart';
+import 'food_detail_controller.dart';
 
 class FoodDetail extends StatefulWidget {
   final Food fooddata;
@@ -23,27 +22,11 @@ class _FoodDetailState extends State<FoodDetail> {
   Future<List<Food>> foodData = FoodListDatabase().getData();
 
   // Food fooddata = foods[0];
-  int _quantity = 1;
-
-  void setQuantity() {
-    setState(() {
-      _quantity++;
-    });
-  }
-
-  void lowQuantity() {
-    if (_quantity <= 0) {
-      _quantity = 1;
-    }
-    setState(() {
-      _quantity--;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     int foodcal = widget.fooddata.calories;
-    int foodprice = (widget.fooddata.price) * _quantity;
+    int foodprice = (widget.fooddata.price) * quantity;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -51,16 +34,19 @@ class _FoodDetailState extends State<FoodDetail> {
         children: [
           //IMG
           Positioned(
-              left: 0,
-              right: 0,
-              child: Container(
-                width: double.maxFinite,
-                height: 350,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage("assets/images/food1.png"))),
-              )),
+            left: 0,
+            right: 0,
+            child: Container(
+              width: double.maxFinite,
+              height: 350,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(widget.fooddata.imageLink),
+                ),
+              ),
+            ),
+          ),
           //ICONS
           Positioned(
               top: 45,
@@ -73,9 +59,10 @@ class _FoodDetailState extends State<FoodDetail> {
                       onTap: () {
                         Navigator.pop(context);
                       },
-                      child: AppIcon(icon: Icons.arrow_back_ios)),
+                      child: const AppIcon(icon: Icons.arrow_back_ios)),
                   GestureDetector(
-                      onTap: () {}, child: AppIcon(icon: Icons.shopping_cart)),
+                      onTap: () {},
+                      child: const AppIcon(icon: Icons.shopping_cart)),
                 ],
               )),
           //TILTE
@@ -84,8 +71,8 @@ class _FoodDetailState extends State<FoodDetail> {
               right: 0,
               top: 300,
               child: Container(
-                padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(20),
                       topLeft: Radius.circular(20),
@@ -97,15 +84,15 @@ class _FoodDetailState extends State<FoodDetail> {
                     BigText(
                       text: widget.fooddata.name,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     SmallText(text: "$foodcal cal"),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
-                    BigText(text: "Introduce "),
-                    SizedBox(
+                    const BigText(text: "Introduce "),
+                    const SizedBox(
                       height: 10,
                     ),
                     SingleChildScrollView(
@@ -121,8 +108,9 @@ class _FoodDetailState extends State<FoodDetail> {
       ),
       bottomNavigationBar: Container(
         height: 120,
-        padding: EdgeInsets.only(top: 30, bottom: 30, left: 20, right: 20),
-        decoration: BoxDecoration(
+        padding:
+            const EdgeInsets.only(top: 30, bottom: 30, left: 20, right: 20),
+        decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(40),
             topRight: Radius.circular(40),
@@ -132,29 +120,37 @@ class _FoodDetailState extends State<FoodDetail> {
         child: Row(
           children: [
             Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20), color: Colors.white),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                    onTap: lowQuantity,
-                    child: Icon(
+                    onTap: (() {
+                      setState(() {
+                        lowQuantity();
+                      });
+                    }),
+                    child: const Icon(
                       Icons.remove,
                       color: AppColor.signColor,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
-                  BigText(text: "$_quantity"),
-                  SizedBox(
+                  BigText(text: "$quantity"),
+                  const SizedBox(
                     width: 5,
                   ),
                   GestureDetector(
-                    onTap: setQuantity,
-                    child: Icon(
+                    onTap: (() {
+                      setState(() {
+                        setQuantity();
+                      });
+                    }),
+                    child: const Icon(
                       Icons.add,
                       color: AppColor.signColor,
                     ),
@@ -163,7 +159,7 @@ class _FoodDetailState extends State<FoodDetail> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   color: AppColor.mainColor),
@@ -172,11 +168,11 @@ class _FoodDetailState extends State<FoodDetail> {
                 child: Row(
                   children: [
                     BigText(text: "\$ $foodprice "),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
-                    Icon(Icons.point_of_sale_rounded),
-                    SmallText(
+                    const Icon(Icons.point_of_sale_rounded),
+                    const SmallText(
                       text: "Add to Cart",
                       size: 16,
                       color: Color.fromARGB(255, 190, 163, 154),
