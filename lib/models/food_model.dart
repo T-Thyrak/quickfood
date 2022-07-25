@@ -20,14 +20,27 @@ class Food {
   }) {
     id = idCounter++;
   }
+
+  Categories stringToCat(String string) {
+    if (string == 'food') {
+      return Categories.food;
+    }
+    if (string == 'drink') {
+      return Categories.drink;
+    }
+    if (string == 'desert') {
+      return Categories.desert;
+    }
+    return Categories.food;
+  }
+
   factory Food.fromJson(Map<String, dynamic> json) {
     return Food(
-      id: json['id'],
       name: json['name'],
       description: json['description'],
       category: json['category'],
-      price: json['price'],
-      calories: json['calories'],
+      price: json['price'] as int,
+      calories: json['calories'] as int,
       imageLink: json['imageLink'],
     );
   }

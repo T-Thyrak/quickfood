@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:get/get.dart';
 import 'package:quickfood/widgets/app_text_field.dart';
@@ -9,10 +12,10 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var emailController = TextEditingController();
-    var passwsdController = TextEditingController();
-    var nameController = TextEditingController();
-    var phoneController = TextEditingController();
+    var _emailController = TextEditingController();
+    var _passwsdController = TextEditingController();
+    var _nameController = TextEditingController();
+    var _phoneController = TextEditingController();
     return Scaffold(
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -22,7 +25,7 @@ class RegisterPage extends StatelessWidget {
               height: 200,
             ),
             AppTextField(
-                textEditingController: emailController,
+                textEditingController: _emailController,
                 hintText: "Email",
                 icon: const Icon(
                   Icons.email,
@@ -32,7 +35,7 @@ class RegisterPage extends StatelessWidget {
               height: 20,
             ),
             AppTextField(
-              textEditingController: passwsdController,
+              textEditingController: _passwsdController,
               hintText: "Password",
               icon: const Icon(
                 Icons.key,
@@ -44,7 +47,7 @@ class RegisterPage extends StatelessWidget {
               height: 20,
             ),
             AppTextField(
-                textEditingController: nameController,
+                textEditingController: _nameController,
                 hintText: "Name",
                 icon: const Icon(
                   Icons.person,
@@ -54,7 +57,7 @@ class RegisterPage extends StatelessWidget {
               height: 20,
             ),
             AppTextField(
-                textEditingController: phoneController,
+                textEditingController: _phoneController,
                 hintText: "Phone",
                 icon: const Icon(
                   Icons.phone,
@@ -63,17 +66,30 @@ class RegisterPage extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            Container(
-              width: Dimensions.screenWidth / 2,
-              height: Dimensions.screenHeight / 13,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: AppColor.mainColor),
-              child: const Center(
-                child: BigText(
-                  text: "Sign up",
-                  size: 30,
-                  color: Colors.white,
+            GestureDetector(
+              onTap: () async {
+                final email = _emailController.text;
+                final name = _nameController.text;
+                final phone = _phoneController.text;
+                final password = _passwsdController.text;
+                final userCre =
+                    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                  email: email,
+                  password: password,
+                );
+              },
+              child: Container(
+                width: Dimensions.screenWidth / 2,
+                height: Dimensions.screenHeight / 13,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: AppColor.mainColor),
+                child: const Center(
+                  child: BigText(
+                    text: "Sign up",
+                    size: 30,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
@@ -97,7 +113,8 @@ class RegisterPage extends StatelessWidget {
               height: 10,
             ),
             const CircleAvatar(
-              backgroundImage: AssetImage("assets/images/google-logo.png"),
+              backgroundColor: Colors.white,
+              backgroundImage: AssetImage("assets/logos/google-logo.png"),
             )
           ],
         ),

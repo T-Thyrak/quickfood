@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:get/get.dart';
 import 'package:quickfood/pages/auth/register/register_page.dart';
@@ -10,8 +11,8 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var emailController = TextEditingController();
-    var passwsdController = TextEditingController();
+    var _emailController = TextEditingController();
+    var _passwsdController = TextEditingController();
     return Scaffold(
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -43,7 +44,7 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             AppTextField(
-                textEditingController: emailController,
+                textEditingController: _emailController,
                 hintText: "Email",
                 icon: const Icon(
                   Icons.email,
@@ -53,7 +54,7 @@ class LoginPage extends StatelessWidget {
               height: 20,
             ),
             AppTextField(
-              textEditingController: passwsdController,
+              textEditingController: _passwsdController,
               hintText: "Password",
               icon: const Icon(
                 Icons.key,
@@ -64,17 +65,28 @@ class LoginPage extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            Container(
-              width: Dimensions.screenWidth / 2,
-              height: Dimensions.screenHeight / 13,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: AppColor.mainColor),
-              child: const Center(
-                child: BigText(
-                  text: "Sign In",
-                  size: 30,
-                  color: Colors.white,
+            GestureDetector(
+              onTap: () async {
+                final email = _emailController.text;
+                final password = _passwsdController.text;
+                final userCre =
+                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                  email: email,
+                  password: password,
+                );
+              },
+              child: Container(
+                width: Dimensions.screenWidth / 2,
+                height: Dimensions.screenHeight / 13,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: AppColor.mainColor),
+                child: const Center(
+                  child: BigText(
+                    text: "Sign In",
+                    size: 30,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
