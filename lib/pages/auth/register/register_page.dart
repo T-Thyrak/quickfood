@@ -72,11 +72,38 @@ class RegisterPage extends StatelessWidget {
                 final name = _nameController.text;
                 final phone = _phoneController.text;
                 final password = _passwsdController.text;
-                final userCre =
-                    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                  email: email,
-                  password: password,
-                );
+                try {
+                  final credential = await FirebaseAuth.instance
+                      .createUserWithEmailAndPassword(
+                    email: email,
+                    password: password,
+                  );
+                  final user = credential.user;
+                  await user?.updateDisplayName(name);
+                  //await user?.updatePhoneNumber(phone);
+                  Get.back();
+                } on FirebaseAuthException catch (e) {
+                  if (e.code == 'weak-password') {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("The password provided is too weak."),
+                      ),
+                    );
+                  } else if (e.code == 'email-already-in-use') {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content:
+                            Text("The account already exists for that email."),
+                      ),
+                    );
+                  }
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Unkown Erorr!"),
+                    ),
+                  );
+                }
               },
               child: Container(
                 width: Dimensions.screenWidth / 2,

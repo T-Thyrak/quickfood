@@ -5,6 +5,7 @@ import 'package:quickfood/pages/auth/register/register_page.dart';
 
 import '../../../core/base_import.dart';
 import '../../../widgets/app_text_field.dart';
+import '../../my_home.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -69,11 +70,50 @@ class LoginPage extends StatelessWidget {
               onTap: () async {
                 final email = _emailController.text;
                 final password = _passwsdController.text;
-                final userCre =
-                    await FirebaseAuth.instance.signInWithEmailAndPassword(
-                  email: email,
-                  password: password,
-                );
+
+                try {
+                  final userCre =
+                      await FirebaseAuth.instance.signInWithEmailAndPassword(
+                    email: email,
+                    password: password,
+                  );
+                  Get.to(() => const MyHomePage(title: "home"),
+                      transition: Transition.fade);
+                } on FirebaseAuthException catch (e) {
+                  if (e.code == 'user-disabled') {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("User email has been disabled."),
+                      ),
+                    );
+                  } else if (e.code == 'invalid-email') {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("The email address is not valid."),
+                      ),
+                    );
+                  } else if (e.code == 'user-not-found') {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                            "There is no user corresponding to the given email."),
+                      ),
+                    );
+                  } else if (e.code == 'wrong-password') {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                            "The password is invalid for the given email, or the account corresponding to the email does not have a password set."),
+                      ),
+                    );
+                  }
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Unkown Erorr!"),
+                    ),
+                  );
+                }
               },
               child: Container(
                 width: Dimensions.screenWidth / 2,
@@ -116,15 +156,17 @@ class LoginPage extends StatelessWidget {
                         style:
                             TextStyle(color: Colors.grey[500], fontSize: 15))),
                 RichText(
-                    text: TextSpan(
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () => Get.to(() => const RegisterPage(),
-                              transition: Transition.fade),
-                        text: " Create",
-                        style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold))),
+                  text: TextSpan(
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => Get.to(() => const RegisterPage(),
+                          transition: Transition.fade),
+                    text: " Create",
+                    style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
               ],
             ),
           ],
