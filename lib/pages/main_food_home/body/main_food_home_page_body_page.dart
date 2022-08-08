@@ -120,6 +120,8 @@ class _MainFoodPageBodyState extends State<MainFoodPageBody> {
                       MaterialPageRoute(
                         builder: (context) => FoodDetail(
                           fooddata: widget.popularFoods[index],
+                          fallbackImage:
+                              const AssetImage("assets/images/food1.png"),
                         ),
                       ),
                     );

@@ -16,20 +16,20 @@ class Food {
     required this.category,
     required this.price,
     required this.calories,
-    required this.imageLink,
+    this.imageLink = "",
   }) {
     id = idCounter++;
   }
 
-  Categories stringToCat(String string) {
+  static Categories stringToCat(String string) {
     if (string == 'food') {
       return Categories.food;
     }
     if (string == 'drink') {
       return Categories.drink;
     }
-    if (string == 'desert') {
-      return Categories.desert;
+    if (string == 'dessert') {
+      return Categories.dessert;
     }
     return Categories.food;
   }
@@ -38,10 +38,10 @@ class Food {
     return Food(
       name: json['name'],
       description: json['description'],
-      category: json['category'],
+      category: Food.stringToCat(json['category']),
       price: json['price'] as int,
       calories: json['calories'] as int,
-      imageLink: json['imageLink'],
+      imageLink: json['imageLink'] ?? "",
     );
   }
 }
@@ -49,7 +49,7 @@ class Food {
 enum Categories {
   food,
   drink,
-  desert,
+  dessert,
 }
 
 class FoodItem {

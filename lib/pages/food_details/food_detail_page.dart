@@ -5,10 +5,12 @@ import 'food_detail_controller.dart';
 
 class FoodDetail extends StatefulWidget {
   final Food fooddata;
+  final ImageProvider fallbackImage;
 
   FoodDetail({
     Key? key,
     required this.fooddata,
+    required this.fallbackImage,
   }) : super(key: key);
 
   @override
@@ -42,7 +44,9 @@ class _FoodDetailState extends State<FoodDetail> {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: NetworkImage(widget.fooddata.imageLink),
+                  image: widget.fooddata.imageLink != ""
+                      ? NetworkImage(widget.fooddata.imageLink)
+                      : (widget.fallbackImage),
                 ),
               ),
             ),

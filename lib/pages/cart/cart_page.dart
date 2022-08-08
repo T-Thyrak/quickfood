@@ -58,60 +58,83 @@ class CartPage extends StatelessWidget {
                       itemCount: 10,
                       itemBuilder: (_, index) {
                         return Container(
-                          height: Dimensions.height20*5,
+                          height: Dimensions.height20 * 5,
                           width: double.maxFinite,
                           child: Row(
                             children: [
                               Container(
-                                width: Dimensions.height20*5,
-                                height: Dimensions.height20*5,
-                                margin: EdgeInsets.only(bottom: Dimensions.height10),
+                                width: Dimensions.height20 * 5,
+                                height: Dimensions.height20 * 5,
+                                margin: EdgeInsets.only(
+                                    bottom: Dimensions.height10),
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: AssetImage(
-                                            "assets/images/burger.webp"
-                                        )
+                                      fit: BoxFit.cover,
+                                      image: AssetImage(
+                                        "assets/images/food1.png",
+                                      ),
                                     ),
-                                    borderRadius: BorderRadius.circular(Dimensions.radius20),
-                                    color: Colors.white
-                                ),
+                                    borderRadius: BorderRadius.circular(
+                                        Dimensions.radius20),
+                                    color: Colors.white),
                               ),
-                              SizedBox(width: Dimensions.width10,),
-                              Expanded(child: Container(
-                                height: Dimensions.height20*5,
+                              SizedBox(
+                                width: Dimensions.width10,
+                              ),
+                              Expanded(
+                                  child: Container(
+                                height: Dimensions.height20 * 5,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    BigText(text: "Bitter Orange Juice", color: Colors.black54,),
+                                    BigText(
+                                      text: "Bitter Orange Juice",
+                                      color: Colors.black54,
+                                    ),
                                     SmallText(text: "Spicy"),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        BigText(text: "\$ 33.0", color: Colors.redAccent,),
+                                        BigText(
+                                          text: "\$ 33.0",
+                                          color: Colors.redAccent,
+                                        ),
                                         Container(
-                                          padding: EdgeInsets.only(top: Dimensions.height10, bottom: Dimensions.height10, right: Dimensions.width10, left: Dimensions.width10),
+                                          padding: EdgeInsets.only(
+                                              top: Dimensions.height10,
+                                              bottom: Dimensions.height10,
+                                              right: Dimensions.width10,
+                                              left: Dimensions.width10),
                                           decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(Dimensions.radius20),
-                                              color: Colors.white
-                                          ),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      Dimensions.radius20),
+                                              color: Colors.white),
                                           child: Row(
                                             children: [
                                               GestureDetector(
-                                                onTap: (){
-
-                                                },
-                                                child: Icon(Icons.remove, color: AppColor.signColor,),
+                                                onTap: () {},
+                                                child: Icon(
+                                                  Icons.remove,
+                                                  color: AppColor.signColor,
+                                                ),
                                               ),
-                                              SizedBox(width: Dimensions.width10/2,),
+                                              SizedBox(
+                                                width: Dimensions.width10 / 2,
+                                              ),
                                               BigText(text: "0"),
-                                              SizedBox(width: Dimensions.width10/2,),
+                                              SizedBox(
+                                                width: Dimensions.width10 / 2,
+                                              ),
                                               GestureDetector(
-                                                onTap: (){
-
-                                                },
-                                                child: Icon(Icons.add, color: AppColor.signColor,),
+                                                onTap: () {},
+                                                child: Icon(
+                                                  Icons.add,
+                                                  color: AppColor.signColor,
+                                                ),
                                               )
                                             ],
                                           ),
