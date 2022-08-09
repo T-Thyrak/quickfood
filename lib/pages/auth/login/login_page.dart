@@ -1,14 +1,26 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:get/get.dart';
+import 'package:quickfood/pages/auth/helper.dart';
 import 'package:quickfood/pages/auth/register/register_page.dart';
 
 import '../../../core/base_import.dart';
 import '../../../widgets/app_text_field.dart';
 import '../../my_home.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  @override
+  void initState() {
+    checkUser();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +118,8 @@ class LoginPage extends StatelessWidget {
                             "The password is invalid for the given email, or the account corresponding to the email does not have a password set."),
                       ),
                     );
+                  } else {
+                    print(e);
                   }
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(

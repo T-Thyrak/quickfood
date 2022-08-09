@@ -44,6 +44,16 @@ class Food {
       imageLink: json['imageLink'] ?? "",
     );
   }
+  factory Food.fromSnapshot(snapshot) {
+    return Food(
+      name: snapshot.data()['name'],
+      description: snapshot.data()['description'],
+      category: Food.stringToCat(snapshot.data()['category']),
+      price: snapshot.data()['price'] as int,
+      calories: snapshot.data()['calories'] as int,
+      imageLink: snapshot.data()['imageLink'] ?? "",
+    );
+  }
 }
 
 enum Categories {

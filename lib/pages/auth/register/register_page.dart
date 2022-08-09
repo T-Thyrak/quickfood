@@ -1,14 +1,28 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:get/get.dart';
+import 'package:quickfood/core/base_import.dart';
+import 'package:quickfood/pages/my_home.dart';
 import 'package:quickfood/widgets/app_text_field.dart';
 
-import '../../../core/base_import.dart';
-
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
+
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  @override
+  void initState() {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user != null) {
+        Get.to(() => const MyHomePage(title: "home"),
+            transition: Transition.fade);
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
