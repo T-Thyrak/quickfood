@@ -80,53 +80,52 @@ class _LoginPageState extends State<LoginPage> {
             ),
             GestureDetector(
               onTap: () async {
-                final email = _emailController.text;
-                final password = _passwsdController.text;
+                if (_emailController.text.isEmpty) {
+                  loadSnackBar(
+                    context,
+                    "Email is Empty!",
+                  );
+                } else if (_passwsdController.text.isEmpty) {
+                  loadSnackBar(
+                    context,
+                    "Password is Empty!",
+                  );
+                } else {
+                  final email = _emailController.text;
+                  final password = _passwsdController.text;
 
-                try {
-                  final userCre =
-                      await FirebaseAuth.instance.signInWithEmailAndPassword(
-                    email: email,
-                    password: password,
-                  );
-                  Get.to(() => const MyHomePage(title: "home"),
-                      transition: Transition.fade);
-                } on FirebaseAuthException catch (e) {
-                  if (e.code == 'user-disabled') {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("User email has been disabled."),
-                      ),
+                  try {
+                    final userCre =
+                        await FirebaseAuth.instance.signInWithEmailAndPassword(
+                      email: email,
+                      password: password,
                     );
-                  } else if (e.code == 'invalid-email') {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("The email address is not valid."),
-                      ),
+                    Get.to(() => const MyHomePage(title: "home"),
+                        transition: Transition.fade);
+                  } on FirebaseAuthException catch (e) {
+                    if (e.code == 'user-disabled') {
+                      loadSnackBar(context, "User email has been disabled.");
+                    } else if (e.code == 'invalid-email') {
+                      loadSnackBar(context, "The email address is not valid.");
+                    } else if (e.code == 'user-not-found') {
+                      loadSnackBar(
+                        context,
+                        "There is no user corresponding to the given email.",
+                      );
+                    } else if (e.code == 'wrong-password') {
+                      loadSnackBar(
+                        context,
+                        "The password is invalid for the given email, or the account corresponding to the email does not have a password set.",
+                      );
+                    } else {
+                      print(e);
+                    }
+                  } catch (e) {
+                    loadSnackBar(
+                      context,
+                      "Unkown Erorr!",
                     );
-                  } else if (e.code == 'user-not-found') {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                            "There is no user corresponding to the given email."),
-                      ),
-                    );
-                  } else if (e.code == 'wrong-password') {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                            "The password is invalid for the given email, or the account corresponding to the email does not have a password set."),
-                      ),
-                    );
-                  } else {
-                    print(e);
                   }
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Unkown Erorr!"),
-                    ),
-                  );
                 }
               },
               child: Container(

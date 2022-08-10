@@ -5,6 +5,8 @@ import 'package:quickfood/core/base_import.dart';
 import 'package:quickfood/pages/my_home.dart';
 import 'package:quickfood/widgets/app_text_field.dart';
 
+import '../helper.dart';
+
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
 
@@ -82,41 +84,63 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             GestureDetector(
               onTap: () async {
-                final email = _emailController.text;
-                final name = _nameController.text;
-                final phone = _phoneController.text;
-                final password = _passwsdController.text;
-                try {
-                  final credential = await FirebaseAuth.instance
-                      .createUserWithEmailAndPassword(
-                    email: email,
-                    password: password,
+                if (_emailController.text.isEmpty) {
+                  loadSnackBar(
+                    context,
+                    "Email is Empty!",
                   );
-                  final user = credential.user;
-                  await user?.updateDisplayName(name);
-                  //await user?.updatePhoneNumber(phone);
-                  Get.back();
-                } on FirebaseAuthException catch (e) {
-                  if (e.code == 'weak-password') {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("The password provided is too weak."),
-                      ),
+                } else if (_nameController.text.isEmpty) {
+                  loadSnackBar(
+                    context,
+                    "Name is Empty!",
+                  );
+                } else if (_phoneController.text.isEmpty) {
+                  loadSnackBar(
+                    context,
+                    "Phone Number is Empty!",
+                  );
+                } else if (_passwsdController.text.isEmpty) {
+                  loadSnackBar(
+                    context,
+                    "Password is Empty!",
+                  );
+                } else {
+                  final email = _emailController.text;
+                  final name = _nameController.text;
+                  final phone = _phoneController.text;
+                  final password = _passwsdController.text;
+                  try {
+                    final credential = await FirebaseAuth.instance
+                        .createUserWithEmailAndPassword(
+                      email: email,
+                      password: password,
                     );
-                  } else if (e.code == 'email-already-in-use') {
+                    final user = credential.user;
+                    await user?.updateDisplayName(name);
+                    //await user?.updatePhoneNumber(phone);
+                    Get.back();
+                  } on FirebaseAuthException catch (e) {
+                    if (e.code == 'weak-password') {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("The password provided is too weak."),
+                        ),
+                      );
+                    } else if (e.code == 'email-already-in-use') {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                              "The account already exists for that email."),
+                        ),
+                      );
+                    }
+                  } catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content:
-                            Text("The account already exists for that email."),
+                        content: Text("Unkown Erorr!"),
                       ),
                     );
                   }
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Unkown Erorr!"),
-                    ),
-                  );
                 }
               },
               child: Container(
