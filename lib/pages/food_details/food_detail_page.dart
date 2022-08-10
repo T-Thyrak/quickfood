@@ -1,5 +1,8 @@
+import 'package:get/get.dart';
 import 'package:quickfood/core/base_import.dart';
 import 'package:quickfood/database/food_list.dart';
+import 'package:quickfood/pages/cart/cart.dart';
+import 'package:quickfood/pages/cart/cart_page_controller.dart';
 import 'package:quickfood/widgets/exandable_text_widgets.dart';
 import 'food_detail_controller.dart';
 
@@ -21,10 +24,10 @@ class _FoodDetailState extends State<FoodDetail> {
   // final Stream<QuerySnapshot> foods =
   //     FirebaseFirestore.instance.collection("Foods List").snapshots();
 
-  Future<List<Food>> foodData = FoodListDatabase().getData();
+  //Future<List<Food>> foodData = FoodListDatabase().getData();
 
   // Food fooddata = foods[0];
-
+  final cardController = Get.find<CartPageController>();
   @override
   Widget build(BuildContext context) {
     int foodcal = widget.fooddata.calories;
@@ -65,7 +68,9 @@ class _FoodDetailState extends State<FoodDetail> {
                       },
                       child: const AppIcon(icon: Icons.arrow_back_ios)),
                   GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(() => CartPage());
+                      },
                       child: const AppIcon(icon: Icons.shopping_cart)),
                 ],
               )),
@@ -168,7 +173,9 @@ class _FoodDetailState extends State<FoodDetail> {
                   borderRadius: BorderRadius.circular(20),
                   color: AppColor.mainColor),
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  cardController.addFood(widget.fooddata, quantity);
+                },
                 child: Row(
                   children: [
                     BigText(text: "\$ $foodprice "),

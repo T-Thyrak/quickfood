@@ -1,13 +1,22 @@
+import 'package:get/get.dart';
 import 'package:quickfood/core/dimensions.dart';
+import 'package:quickfood/pages/cart/cart_page_controller.dart';
+import 'package:quickfood/pages/my_home.dart';
 import 'package:quickfood/widgets/app_icon.dart';
 import 'package:quickfood/widgets/big_text.dart';
 import 'package:quickfood/widgets/small_text.dart';
 import 'package:flutter/material.dart';
 import '../../core/color.dart';
 
-class CartPage extends StatelessWidget {
+class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
 
+  @override
+  State<CartPage> createState() => _CartPageState();
+}
+
+class _CartPageState extends State<CartPage> {
+  final cardController = Get.find<CartPageController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,26 +29,39 @@ class CartPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  AppIcon(
-                    icon: Icons.arrow_back_ios,
-                    iconColor: Colors.white,
-                    backgroundColor: AppColor.mainColor,
-                    iconSize: Dimensions.iconSize24,
+                  GestureDetector(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: AppIcon(
+                      icon: Icons.arrow_back_ios,
+                      iconColor: Colors.white,
+                      backgroundColor: AppColor.mainColor,
+                      iconSize: Dimensions.iconSize24,
+                    ),
                   ),
                   SizedBox(
                     width: Dimensions.width20 * 5,
                   ),
-                  AppIcon(
-                    icon: Icons.home_outlined,
-                    iconColor: Colors.white,
-                    backgroundColor: AppColor.mainColor,
-                    iconSize: Dimensions.iconSize24,
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => MyHomePage(title: "home"));
+                    },
+                    child: AppIcon(
+                      icon: Icons.home_outlined,
+                      iconColor: Colors.white,
+                      backgroundColor: AppColor.mainColor,
+                      iconSize: Dimensions.iconSize24,
+                    ),
                   ),
-                  AppIcon(
-                    icon: Icons.shopping_cart,
-                    iconColor: Colors.white,
-                    backgroundColor: AppColor.mainColor,
-                    iconSize: Dimensions.iconSize24,
+                  GestureDetector(
+                    onTap: () {},
+                    child: AppIcon(
+                      icon: Icons.shopping_cart,
+                      iconColor: Colors.white,
+                      backgroundColor: AppColor.mainColor,
+                      iconSize: Dimensions.iconSize24,
+                    ),
                   ),
                 ],
               )),
@@ -55,7 +77,7 @@ class CartPage extends StatelessWidget {
                   context: context,
                   removeTop: true,
                   child: ListView.builder(
-                      itemCount: 10,
+                      itemCount: cardController.foodInCard.length,
                       itemBuilder: (_, index) {
                         return Container(
                           height: Dimensions.height20 * 5,
@@ -90,16 +112,20 @@ class CartPage extends StatelessWidget {
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
                                     BigText(
-                                      text: "Bitter Orange Juice",
+                                      text: cardController
+                                          .foodInCard[index].food.name,
                                       color: Colors.black54,
                                     ),
-                                    SmallText(text: "Spicy"),
+                                    SmallText(
+                                        text:
+                                            "${cardController.foodInCard[index].food.calories * cardController.foodInCard[index].qty} cal"),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         BigText(
-                                          text: "\$ 33.0",
+                                          text:
+                                              "${cardController.foodInCard[index].food.price * cardController.foodInCard[index].qty}\$",
                                           color: Colors.redAccent,
                                         ),
                                         Container(
@@ -116,7 +142,12 @@ class CartPage extends StatelessWidget {
                                           child: Row(
                                             children: [
                                               GestureDetector(
-                                                onTap: () {},
+                                                onTap: () {
+                                                  setState(() {
+                                                    cardController
+                                                        .decFood(index);
+                                                  });
+                                                },
                                                 child: Icon(
                                                   Icons.remove,
                                                   color: AppColor.signColor,
@@ -125,12 +156,19 @@ class CartPage extends StatelessWidget {
                                               SizedBox(
                                                 width: Dimensions.width10 / 2,
                                               ),
-                                              BigText(text: "0"),
+                                              BigText(
+                                                  text:
+                                                      "${cardController.foodInCard[index].qty}"),
                                               SizedBox(
                                                 width: Dimensions.width10 / 2,
                                               ),
                                               GestureDetector(
-                                                onTap: () {},
+                                                onTap: () {
+                                                  setState(() {
+                                                    cardController
+                                                        .incFood(index);
+                                                  });
+                                                },
                                                 child: Icon(
                                                   Icons.add,
                                                   color: AppColor.signColor,

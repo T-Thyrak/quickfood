@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:get/get.dart';
 import 'package:quickfood/core/base_import.dart';
+import 'package:quickfood/pages/auth/register/register_page_controller.dart';
 import 'package:quickfood/pages/my_home.dart';
 import 'package:quickfood/widgets/app_text_field.dart';
 
@@ -177,9 +178,12 @@ class _RegisterPageState extends State<RegisterPage> {
             const SizedBox(
               height: 10,
             ),
-            const CircleAvatar(
-              backgroundColor: Colors.white,
-              backgroundImage: AssetImage("assets/logos/google-logo.png"),
+            GestureDetector(
+              //onTap: () => signup(context),
+              child: const CircleAvatar(
+                backgroundColor: Colors.white,
+                backgroundImage: AssetImage("assets/logos/google-logo.png"),
+              ),
             )
           ],
         ),

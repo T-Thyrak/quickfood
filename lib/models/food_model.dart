@@ -64,7 +64,7 @@ enum Categories {
 
 class FoodItem {
   final Food food;
-  final int qty;
+  int qty;
 
-  const FoodItem({required this.food, required this.qty});
+  FoodItem({required this.food, required this.qty});
 }
