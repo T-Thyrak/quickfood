@@ -32,8 +32,8 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 2), () async {
-      //final foodDataController = Get.find<FoodListDatabase>();
-      //await foodDataController.loadDataFood();
+      final foodDataController = Get.find<FoodListDatabase>();
+      await foodDataController.loadDataFood();
       if (mounted) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(

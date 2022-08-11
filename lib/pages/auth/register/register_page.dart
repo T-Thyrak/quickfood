@@ -5,6 +5,7 @@ import 'package:quickfood/core/base_import.dart';
 import 'package:quickfood/pages/auth/register/register_page_controller.dart';
 import 'package:quickfood/pages/my_home.dart';
 import 'package:quickfood/widgets/app_text_field.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helper.dart';
 
@@ -106,10 +107,12 @@ class _RegisterPageState extends State<RegisterPage> {
                     "Password is Empty!",
                   );
                 } else {
+                  final prefs = await SharedPreferences.getInstance();
                   final email = _emailController.text;
                   final name = _nameController.text;
                   final phone = _phoneController.text;
                   final password = _passwsdController.text;
+                  await prefs.setString('phoneNumber', phone);
                   try {
                     final credential = await FirebaseAuth.instance
                         .createUserWithEmailAndPassword(

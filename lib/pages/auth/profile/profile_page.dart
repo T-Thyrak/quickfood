@@ -3,6 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:quickfood/core/base_import.dart';
 import 'package:quickfood/pages/auth/helper.dart';
 import 'package:quickfood/widgets/account_wiget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -74,6 +75,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               bigText: BigText(
                 text: email,
+                size: 18,
               ),
             ),
             SizedBox(
@@ -97,8 +99,8 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             GestureDetector(
               onTap: () async {
-                await GoogleSignIn().disconnect();
                 credential.signOut();
+                await GoogleSignIn().disconnect();
               },
               child: AccountWiget(
                 appIcon: AppIcon(
