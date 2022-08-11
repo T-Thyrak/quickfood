@@ -75,7 +75,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               bigText: BigText(
                 text: email,
-                size: 18,
+                size: 16,
               ),
             ),
             SizedBox(

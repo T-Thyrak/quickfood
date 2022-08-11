@@ -13,6 +13,7 @@ class CartPageController extends GetxController {
 
   void clear() {
     foodInCard.clear();
+    total = 0.obs;
     update();
   }
 

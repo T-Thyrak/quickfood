@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:quickfood/core/dimensions.dart';
 import 'package:quickfood/pages/cart/cart_page_controller.dart';
+import 'package:quickfood/pages/map/order_done.dart';
 import 'package:quickfood/pages/my_home.dart';
 import 'package:quickfood/widgets/app_icon.dart';
 import 'package:quickfood/widgets/big_text.dart';
@@ -206,7 +207,9 @@ class _CartPageState extends State<CartPage> {
                     width: 100,
                   ),
                   GestureDetector(
-                    onTap: (() {}),
+                    onTap: (() {
+                      Get.to(() => LocationPage());
+                    }),
                     child: Container(
                       width: 120,
                       height: 50,
