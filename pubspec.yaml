@@ -42,9 +42,6 @@ dependencies:
   flutter_secure_storage: ^5.0.2
   shared_preferences: ^2.0.15
   google_sign_in: ^5.4.1
-  google_maps_flutter: ^2.1.10
-  geocoding: ^2.0.4
-  geolocator: ^9.0.1
 
 dev_dependencies:
   flutter_test:

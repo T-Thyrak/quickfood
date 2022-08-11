@@ -25,7 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
     final userCredential = credential.currentUser;
     String userName = userCredential?.displayName ?? "NOT FOUND";
     String email = userCredential?.email ?? "NOT FOUND";
-    String phoneNumber = userCredential?.phoneNumber ?? "NOT FOUND";
+    String phoneNumber = userCredential?.phoneNumber ?? "09323234";
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.mainColor,

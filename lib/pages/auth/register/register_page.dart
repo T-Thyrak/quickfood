@@ -40,7 +40,20 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Column(
           children: [
             const SizedBox(
-              height: 200,
+              height: 100,
+            ),
+            const Center(
+              child: Text(
+                "Quick Food",
+                style: TextStyle(
+                  color: AppColor.mainColor,
+                  fontSize: 40,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 50,
             ),
             AppTextField(
                 textEditingController: _emailController,
