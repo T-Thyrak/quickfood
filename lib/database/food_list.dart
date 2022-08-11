@@ -18,15 +18,15 @@ class FoodListDatabase extends GetxController {
     // return snapshot.docs.map((doc) => doc.data()).toList();
   }
 
-  List<Food> _foodDataLoad = [];
+  List<Food> foodDataLoad = <Food>[].obs;
 
-  List<Food> get foodDataLoad {
-    loadDataFood();
-    return _foodDataLoad;
-  }
+  // List<dynamic> get foodDataLoad {
+  //   loadDataFood();
+  //   return _foodDataLoad;
+  // }
 
   Future loadDataFood() async {
-    _foodDataLoad = await getData();
+    foodDataLoad = await getData();
     update();
   }
 }

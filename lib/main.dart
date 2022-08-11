@@ -9,6 +9,7 @@ import 'package:quickfood/pages/cart/cart_bindings.dart';
 import 'package:quickfood/pages/food_details/food_detail.dart';
 import 'package:quickfood/pages/my_home.dart';
 import 'package:quickfood/pages/auth/register/register_page.dart';
+import 'package:quickfood/pages/splash_screen/splash_screen.dart';
 import 'package:quickfood/routes/routes.dart';
 
 import 'database/food_list.dart';
@@ -37,9 +38,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       //home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      home: LoginPage(),
+      //home: LoginPage(),
       //home: ProfilePage(),
       // home: TestRead(),
+      home: SplashScreenPage(),
       routes: Routes.routes,
       initialBinding: CartBindings(),
     );

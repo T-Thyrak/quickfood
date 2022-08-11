@@ -139,8 +139,8 @@ class _MainFoodPageBodyState extends State<MainFoodPageBody> {
                           color: Colors.white38,
                           image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: AssetImage(
-                                "assets/images/food${index + 1}.png"),
+                            image: NetworkImage(
+                                widget.popularFoods[index].imageLink),
                           ),
                         ),
                       ),
@@ -167,7 +167,7 @@ class _MainFoodPageBodyState extends State<MainFoodPageBody> {
                                 ),
                                 SmallText(
                                     text:
-                                        widget.popularFoods[index].description),
+                                        "${widget.popularFoods[index].calories} cal"),
                               ],
                             ),
                           ),

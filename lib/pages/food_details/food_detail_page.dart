@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:quickfood/core/base_import.dart';
-import 'package:quickfood/database/food_list.dart';
 import 'package:quickfood/pages/cart/cart.dart';
 import 'package:quickfood/pages/cart/cart_page_controller.dart';
 import 'package:quickfood/widgets/exandable_text_widgets.dart';
@@ -174,6 +173,7 @@ class _FoodDetailState extends State<FoodDetail> {
                   color: AppColor.mainColor),
               child: InkWell(
                 onTap: () {
+                  Get.snackbar("Food ADDED", widget.fooddata.name);
                   cardController.addFood(widget.fooddata, quantity);
                 },
                 child: Row(

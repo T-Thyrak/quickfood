@@ -92,9 +92,8 @@ class _CartPageState extends State<CartPage> {
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: AssetImage(
-                                        "assets/images/food1.png",
-                                      ),
+                                      image: NetworkImage(cardController
+                                          .foodInCard[index].food.imageLink),
                                     ),
                                     borderRadius: BorderRadius.circular(
                                         Dimensions.radius20),
