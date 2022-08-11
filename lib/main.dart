@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
-import 'package:quickfood/core/dependencies.dart';
 
 import 'package:quickfood/pages/auth/login/login_page.dart';
 import 'package:quickfood/pages/auth/profile/profile_page.dart';
+import 'package:quickfood/pages/cart/cart_bindings.dart';
 import 'package:quickfood/pages/food_details/food_detail.dart';
 import 'package:quickfood/pages/my_home.dart';
 import 'package:quickfood/pages/auth/register/register_page.dart';
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
       //home: ProfilePage(),
       // home: TestRead(),
       routes: Routes.routes,
-      initialBinding: Dependencies(),
+      initialBinding: CartBindings(),
     );
   }
 }
