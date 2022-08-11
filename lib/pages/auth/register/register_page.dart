@@ -179,7 +179,7 @@ class _RegisterPageState extends State<RegisterPage> {
               height: 10,
             ),
             GestureDetector(
-              //onTap: () => signup(context),
+              onTap: () => googleLogin(),
               child: const CircleAvatar(
                 backgroundColor: Colors.white,
                 backgroundImage: AssetImage("assets/logos/google-logo.png"),

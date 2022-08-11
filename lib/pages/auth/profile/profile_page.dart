@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:quickfood/core/base_import.dart';
 import 'package:quickfood/pages/auth/helper.dart';
 import 'package:quickfood/widgets/account_wiget.dart';
@@ -23,7 +24,7 @@ class _ProfilePageState extends State<ProfilePage> {
     final userCredential = credential.currentUser;
     String userName = userCredential?.displayName ?? "NOT FOUND";
     String email = userCredential?.email ?? "NOT FOUND";
-    String phoneNumber = userCredential?.phoneNumber ?? "088325323";
+    String phoneNumber = userCredential?.phoneNumber ?? "NOT FOUND";
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.mainColor,
@@ -95,7 +96,10 @@ class _ProfilePageState extends State<ProfilePage> {
               height: Dimensions.height30,
             ),
             GestureDetector(
-              onTap: () => credential.signOut(),
+              onTap: () async {
+                await GoogleSignIn().disconnect();
+                credential.signOut();
+              },
               child: AccountWiget(
                 appIcon: AppIcon(
                   icon: Icons.exit_to_app,

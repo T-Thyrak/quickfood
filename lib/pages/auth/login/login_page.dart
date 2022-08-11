@@ -153,9 +153,12 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(
               height: 10,
             ),
-            const CircleAvatar(
-              backgroundColor: Colors.white,
-              backgroundImage: AssetImage("assets/logos/google-logo.png"),
+            GestureDetector(
+              onTap: () => googleLogin(),
+              child: const CircleAvatar(
+                backgroundColor: Colors.white,
+                backgroundImage: AssetImage("assets/logos/google-logo.png"),
+              ),
             ),
             const SizedBox(
               height: 40,
