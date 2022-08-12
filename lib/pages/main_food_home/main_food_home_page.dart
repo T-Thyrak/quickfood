@@ -1,6 +1,8 @@
+import 'package:get/get.dart';
 import 'package:quickfood/core/base_import.dart';
 import 'package:quickfood/database/food_list.dart';
 import 'package:quickfood/models/models.dart';
+import 'package:quickfood/pages/auth/profile/profile_page.dart';
 import 'package:quickfood/pages/main_food_home/body/main_food_home_page_body.dart';
 import 'package:quickfood/pages/main_food_home/main_food_home_controller.dart';
 import 'package:quickfood/widgets/common_widgets.dart';
@@ -21,6 +23,15 @@ class _MainFoodHomePageState extends State<MainFoodHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: GestureDetector(
+          onTap: () => Get.to(() => ProfilePage()),
+          child: const AppIcon(
+            icon: Icons.person,
+            backgroundColor: AppColor.mainColor,
+            size: 50,
+            iconSize: 30,
+            iconColor: Colors.white,
+          )),
       body: FutureBuilder(
         future: widget.controller.foodListDatabase.getData(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
