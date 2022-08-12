@@ -1,14 +1,32 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:get/get.dart';
+import 'package:quickfood/core/base_import.dart';
+import 'package:quickfood/pages/auth/register/register_page_controller.dart';
+import 'package:quickfood/pages/my_home.dart';
 import 'package:quickfood/widgets/app_text_field.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../core/base_import.dart';
+import '../helper.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
+
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  @override
+  void initState() {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user != null) {
+        Get.to(() => const MyHomePage(title: "home"),
+            transition: Transition.fade);
+      }
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +40,20 @@ class RegisterPage extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(
-              height: 200,
+              height: 100,
+            ),
+            const Center(
+              child: Text(
+                "Quick Food",
+                style: TextStyle(
+                  color: AppColor.mainColor,
+                  fontSize: 40,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 50,
             ),
             AppTextField(
                 textEditingController: _emailController,
@@ -68,41 +99,65 @@ class RegisterPage extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () async {
-                final email = _emailController.text;
-                final name = _nameController.text;
-                final phone = _phoneController.text;
-                final password = _passwsdController.text;
-                try {
-                  final credential = await FirebaseAuth.instance
-                      .createUserWithEmailAndPassword(
-                    email: email,
-                    password: password,
+                if (_emailController.text.isEmpty) {
+                  loadSnackBar(
+                    context,
+                    "Email is Empty!",
                   );
-                  final user = credential.user;
-                  await user?.updateDisplayName(name);
-                  //await user?.updatePhoneNumber(phone);
-                  Get.back();
-                } on FirebaseAuthException catch (e) {
-                  if (e.code == 'weak-password') {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("The password provided is too weak."),
-                      ),
+                } else if (_nameController.text.isEmpty) {
+                  loadSnackBar(
+                    context,
+                    "Name is Empty!",
+                  );
+                } else if (_phoneController.text.isEmpty) {
+                  loadSnackBar(
+                    context,
+                    "Phone Number is Empty!",
+                  );
+                } else if (_passwsdController.text.isEmpty) {
+                  loadSnackBar(
+                    context,
+                    "Password is Empty!",
+                  );
+                } else {
+                  final prefs = await SharedPreferences.getInstance();
+                  final email = _emailController.text;
+                  final name = _nameController.text;
+                  final phone = _phoneController.text;
+                  final password = _passwsdController.text;
+                  await prefs.setString('phoneNumber', phone);
+                  try {
+                    final credential = await FirebaseAuth.instance
+                        .createUserWithEmailAndPassword(
+                      email: email,
+                      password: password,
                     );
-                  } else if (e.code == 'email-already-in-use') {
+                    final user = credential.user;
+                    await user?.updateDisplayName(name);
+                    //await user?.updatePhoneNumber(phone);
+                    Get.back();
+                  } on FirebaseAuthException catch (e) {
+                    if (e.code == 'weak-password') {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("The password provided is too weak."),
+                        ),
+                      );
+                    } else if (e.code == 'email-already-in-use') {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                              "The account already exists for that email."),
+                        ),
+                      );
+                    }
+                  } catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content:
-                            Text("The account already exists for that email."),
+                        content: Text("Unkown Erorr!"),
                       ),
                     );
                   }
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Unkown Erorr!"),
-                    ),
-                  );
                 }
               },
               child: Container(
@@ -139,9 +194,12 @@ class RegisterPage extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            const CircleAvatar(
-              backgroundColor: Colors.white,
-              backgroundImage: AssetImage("assets/logos/google-logo.png"),
+            GestureDetector(
+              onTap: () => googleLogin(),
+              child: const CircleAvatar(
+                backgroundColor: Colors.white,
+                backgroundImage: AssetImage("assets/logos/google-logo.png"),
+              ),
             )
           ],
         ),

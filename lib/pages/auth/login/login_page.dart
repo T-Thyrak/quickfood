@@ -1,14 +1,26 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:get/get.dart';
+import 'package:quickfood/pages/auth/helper.dart';
 import 'package:quickfood/pages/auth/register/register_page.dart';
 
 import '../../../core/base_import.dart';
 import '../../../widgets/app_text_field.dart';
 import '../../my_home.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  @override
+  void initState() {
+    checkUser();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,51 +80,52 @@ class LoginPage extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () async {
-                final email = _emailController.text;
-                final password = _passwsdController.text;
-
-                try {
-                  final userCre =
-                      await FirebaseAuth.instance.signInWithEmailAndPassword(
-                    email: email,
-                    password: password,
+                if (_emailController.text.isEmpty) {
+                  loadSnackBar(
+                    context,
+                    "Email is Empty!",
                   );
-                  Get.to(() => const MyHomePage(title: "home"),
-                      transition: Transition.fade);
-                } on FirebaseAuthException catch (e) {
-                  if (e.code == 'user-disabled') {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("User email has been disabled."),
-                      ),
+                } else if (_passwsdController.text.isEmpty) {
+                  loadSnackBar(
+                    context,
+                    "Password is Empty!",
+                  );
+                } else {
+                  final email = _emailController.text;
+                  final password = _passwsdController.text;
+
+                  try {
+                    final userCre =
+                        await FirebaseAuth.instance.signInWithEmailAndPassword(
+                      email: email,
+                      password: password,
                     );
-                  } else if (e.code == 'invalid-email') {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("The email address is not valid."),
-                      ),
-                    );
-                  } else if (e.code == 'user-not-found') {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                            "There is no user corresponding to the given email."),
-                      ),
-                    );
-                  } else if (e.code == 'wrong-password') {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                            "The password is invalid for the given email, or the account corresponding to the email does not have a password set."),
-                      ),
+                    Get.to(() => const MyHomePage(title: "home"),
+                        transition: Transition.fade);
+                  } on FirebaseAuthException catch (e) {
+                    if (e.code == 'user-disabled') {
+                      loadSnackBar(context, "User email has been disabled.");
+                    } else if (e.code == 'invalid-email') {
+                      loadSnackBar(context, "The email address is not valid.");
+                    } else if (e.code == 'user-not-found') {
+                      loadSnackBar(
+                        context,
+                        "There is no user corresponding to the given email.",
+                      );
+                    } else if (e.code == 'wrong-password') {
+                      loadSnackBar(
+                        context,
+                        "The password is invalid for the given email, or the account corresponding to the email does not have a password set.",
+                      );
+                    } else {
+                      print(e);
+                    }
+                  } catch (e) {
+                    loadSnackBar(
+                      context,
+                      "Unkown Erorr!",
                     );
                   }
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Unkown Erorr!"),
-                    ),
-                  );
                 }
               },
               child: Container(
@@ -140,9 +153,12 @@ class LoginPage extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            const CircleAvatar(
-              backgroundColor: Colors.white,
-              backgroundImage: AssetImage("assets/logos/google-logo.png"),
+            GestureDetector(
+              onTap: () => googleLogin(),
+              child: const CircleAvatar(
+                backgroundColor: Colors.white,
+                backgroundImage: AssetImage("assets/logos/google-logo.png"),
+              ),
             ),
             const SizedBox(
               height: 40,
